@@ -19,7 +19,7 @@ for i in range(0, 2):
     else:
         link = 'https://www.fxp.co.il/forumdisplay.php?f=46&page=%s' % (str(i + 1))
 
-    browser = webdriver.Chrome(chromedriver)
+    browser = webdriver.Chrome()
     browser.get(link)
     html_source = browser.page_source
     browser.quit()
