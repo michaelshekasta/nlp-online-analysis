@@ -6,24 +6,26 @@ Created on Sat Jun 29 13:38:49 2019
 """
 
 from selenium import webdriver
-import bs4 as bs
-import pandas as pd
-import datetime
+from bs4 import BeautifulSoup
+from pandas import DataFrame, read_csv
+from datetime import datetime
 
-df_craft = pd.DataFrame(columns=['thread', 'post'])
+df_craft = DataFrame(columns=['thread', 'post'])
 counter = 0
-df_pages = pd.read_csv('pages100.csv')
-chromedriver = '/home/filler/chromedriver'
+df_pages = read_csv('pages100.csv')
+chromedriver = 'chromedriver.exe'
 base_url = 'https://www.fxp.co.il/'
 for page in df_pages['href'].values:
     print(counter)
-    print('starting page %s in %s' % (page, datetime.datetime.now()))
+    print('starting page %s in %s' % (page, datetime.now()))
     link = base_url + page
-    browser = webdriver.Chrome(chromedriver)
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
+    browser = webdriver.Chrome(options=options)
     browser.get(link)
     html_source = browser.page_source
     browser.quit()
-    soup = bs.BeautifulSoup(html_source, "lxml")
+    soup = BeautifulSoup(html_source, "lxml")
     el = soup.find("h1", {'itemprop': 'headline'})
     if el is None:
         continue
@@ -53,11 +55,13 @@ for page in df_pages['href'].values:
         last_page_number = int(last_page_number) + 1
         for i in range(2, last_page_number):
             link = base_url + page + '&page=' + str(i)
-            browser = webdriver.Chrome(chromedriver)
+            options = webdriver.ChromeOptions()
+            options.add_argument("--headless")
+            browser = webdriver.Chrome(options=options)
             browser.get(link)
             html_source = browser.page_source
             browser.quit()
-            soup = bs.BeautifulSoup(html_source, "lxml")
+            soup = BeautifulSoup(html_source, "lxml")
             for el in soup.find_all("blockquote", {"class": "postcontent restore"}):
                 full = el.get_text()
                 r = el.find_all('div')
@@ -67,7 +71,7 @@ for page in df_pages['href'].values:
                 if full != '':
                     df_craft = df_craft.append({'thread': page, 'post': full}, ignore_index=True)
 
-    print('ending page %s in %s' % (page, datetime.datetime.now()))
+    print('ending page %s in %s' % (page, datetime.now()))
     counter = counter + 1
     if counter % 100 == 0:
         df_craft.to_csv('newversion_sc%s.csv' % (str(counter)), encoding='utf-8-sig', index=False)

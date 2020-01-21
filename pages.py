@@ -11,8 +11,8 @@ from pandas import DataFrame
 from datetime import datetime
 
 df = DataFrame(columns=['page', 'href'])
-chromedriver = '/home/filler/chromedriver'
-for i in range(0, 2):
+chromedriver = 'chromedriver.exe'
+for i in range(0, 100):
     print('starting page %s in %s' % (str(i), datetime.now()))
     if i == 0:
         link = 'https://www.fxp.co.il/forumdisplay.php?f=46'
