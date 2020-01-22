@@ -12,7 +12,7 @@ from datetime import datetime
 
 df = DataFrame(columns=['page', 'href'])
 chromedriver = 'chromedriver'
-for i in range(0, 2):
+for i in range(0, 100):
     print('starting page %s in %s' % (str(i), datetime.now()))
     if i == 0:
         link = 'https://www.fxp.co.il/forumdisplay.php?f=46'
