@@ -38,4 +38,4 @@ for i in range(0, 100):
     df_temp['page'] = i
     df = df.append(df_temp, ignore_index=True)
     print('ending page %s in %s' % (str(i), datetime.now()))
-df.to_csv('pages100.csv')
+    df.to_csv('pages100.csv')
