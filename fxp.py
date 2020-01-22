@@ -13,7 +13,7 @@ from datetime import datetime
 df_craft = DataFrame(columns=['thread', 'post'])
 counter = 0
 df_pages = read_csv('pages100.csv')
-chromedriver = '/home/filler/chromedriver'
+chromedriver = 'chromedriver'
 base_url = 'https://www.fxp.co.il/'
 for page in df_pages['href'].values:
     print(counter)

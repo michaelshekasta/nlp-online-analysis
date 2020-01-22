@@ -11,7 +11,7 @@ from pandas import DataFrame
 from datetime import datetime
 
 df = DataFrame(columns=['page', 'href'])
-chromedriver = '/home/filler/chromedriver'
+chromedriver = 'chromedriver'
 for i in range(0, 2):
     print('starting page %s in %s' % (str(i), datetime.now()))
     if i == 0:
@@ -21,6 +21,8 @@ for i in range(0, 2):
 
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
+    PROXY = "81.218.45.231:8888" # IP:PORT or HOST:PORT
+    options.add_argument('--proxy-server=%s' % PROXY)
     browser = webdriver.Chrome(options=options)
     browser.get(link)
     html_source = browser.page_source
