@@ -21,6 +21,8 @@ for page in df_pages['href'].values:
     link = base_url + page
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
+    PROXY = "81.218.45.231:8888" # IP:PORT or HOST:PORT
+    options.add_argument('--proxy-server=%s' % PROXY)
     browser = webdriver.Chrome(options=options)
     browser.get(link)
     html_source = browser.page_source
@@ -57,6 +59,8 @@ for page in df_pages['href'].values:
             link = base_url + page + '&page=' + str(i)
             options = webdriver.ChromeOptions()
             options.add_argument("--headless")
+            PROXY = "81.218.45.231:8888" # IP:PORT or HOST:PORT
+            options.add_argument('--proxy-server=%s' % PROXY)
             browser = webdriver.Chrome(options=options)
             browser.get(link)
             html_source = browser.page_source
@@ -76,4 +80,4 @@ for page in df_pages['href'].values:
     if counter % 100 == 0:
         df_craft.to_csv('newversion_sc%s.csv' % (str(counter)), encoding='utf-8-sig', index=False)
 
-df_craft.to_csv('newversion_sc%s.csv' % (str(counter)), encoding='utf-8-sig', index=False)
+    df_craft.to_csv('newversion_sc%s.csv' % (str(counter)), encoding='utf-8-sig', index=False)
