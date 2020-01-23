@@ -21,12 +21,12 @@ for i in range(0, 100):
 
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
-    PROXY = "212.25.123.18:8888" # IP:PORT or HOST:PORT
+    PROXY = "81.218.45.231:8888" # IP:PORT or HOST:PORT
     options.add_argument('--proxy-server=%s' % PROXY)
     browser = webdriver.Chrome(options=options)
     browser.get(link)
     html_source = browser.page_source
-    # print("html_source:\n",  html_source)
+    print("html_source:\n",  html_source)
     browser.quit()
     soup = BeautifulSoup(html_source, "lxml")
     pages = []

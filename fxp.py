@@ -13,12 +13,15 @@ from datetime import datetime
 df_craft = DataFrame(columns=['thread', 'post'])
 counter = 0
 df_pages = read_csv('pages100.csv')
+
+print(df_pages.shape)
+
 chromedriver = 'chromedriver'
 base_url = 'https://www.fxp.co.il/'
 
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")
-PROXY = "212.25.123.18:8888" # IP:PORT or HOST:PORT
+PROXY = "81.218.45.231:8888" # IP:PORT or HOST:PORT
 options.add_argument('--proxy-server=%s' % PROXY)
 browser = webdriver.Chrome(options=options)
 
