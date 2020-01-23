@@ -15,18 +15,20 @@ counter = 0
 df_pages = read_csv('pages100.csv')
 chromedriver = 'chromedriver'
 base_url = 'https://www.fxp.co.il/'
+
+options = webdriver.ChromeOptions()
+options.add_argument("--headless")
+PROXY = "81.218.45.231:8888" # IP:PORT or HOST:PORT
+options.add_argument('--proxy-server=%s' % PROXY)
+browser = webdriver.Chrome(options=options)
+
 for page in df_pages['href'].values:
     print(counter)
     print('starting page %s in %s' % (page, datetime.now()))
     link = base_url + page
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
-    PROXY = "81.218.45.231:8888" # IP:PORT or HOST:PORT
-    options.add_argument('--proxy-server=%s' % PROXY)
-    browser = webdriver.Chrome(options=options)
     browser.get(link)
     html_source = browser.page_source
-    browser.quit()
+    # browser.quit()
     soup = BeautifulSoup(html_source, "lxml")
     el = soup.find("h1", {'itemprop': 'headline'})
     if el is None:
@@ -57,14 +59,14 @@ for page in df_pages['href'].values:
         last_page_number = int(last_page_number) + 1
         for i in range(2, last_page_number):
             link = base_url + page + '&page=' + str(i)
-            options = webdriver.ChromeOptions()
-            options.add_argument("--headless")
-            PROXY = "81.218.45.231:8888" # IP:PORT or HOST:PORT
-            options.add_argument('--proxy-server=%s' % PROXY)
-            browser = webdriver.Chrome(options=options)
+            # options = webdriver.ChromeOptions()
+            # options.add_argument("--headless")
+            # PROXY = "81.218.45.231:8888" # IP:PORT or HOST:PORT
+            # options.add_argument('--proxy-server=%s' % PROXY)
+            # browser = webdriver.Chrome(options=options)
             browser.get(link)
             html_source = browser.page_source
-            browser.quit()
+            # browser.quit()
             soup = BeautifulSoup(html_source, "lxml")
             for el in soup.find_all("blockquote", {"class": "postcontent restore"}):
                 full = el.get_text()
@@ -77,7 +79,9 @@ for page in df_pages['href'].values:
 
     print('ending page %s in %s' % (page, datetime.now()))
     counter = counter + 1
-    if counter % 100 == 0:
-        df_craft.to_csv('newversion_sc%s.csv' % (str(counter)), encoding='utf-8-sig', index=False)
+    #if counter % 100 == 0:
+    #    df_craft.to_csv('newversion_sc%s.csv' % (str(counter)), encoding='utf-8-sig', index=False)
 
     df_craft.to_csv('newversion_sc%s.csv' % (str(counter)), encoding='utf-8-sig', index=False)
+
+browser.quit()
