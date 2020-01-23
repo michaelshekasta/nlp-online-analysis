@@ -82,6 +82,6 @@ for page in df_pages['href'].values:
     #if counter % 100 == 0:
     #    df_craft.to_csv('newversion_sc%s.csv' % (str(counter)), encoding='utf-8-sig', index=False)
 
-    df_craft.to_csv('newversion_sc%s.csv' % (str(counter)), encoding='utf-8-sig', index=False)
+    df_craft.to_csv('posts.csv', encoding='utf-8-sig', index=False, mode='a')
 
 browser.quit()
