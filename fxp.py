@@ -18,7 +18,7 @@ base_url = 'https://www.fxp.co.il/'
 
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")
-PROXY = "81.218.45.231:8888" # IP:PORT or HOST:PORT
+PROXY = "212.25.123.18:8888" # IP:PORT or HOST:PORT
 options.add_argument('--proxy-server=%s' % PROXY)
 browser = webdriver.Chrome(options=options)
 
