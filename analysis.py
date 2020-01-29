@@ -9,8 +9,13 @@ from pandas import DataFrame, read_csv
 import torch
 from transformers import BertTokenizer, BertModel, BertEncoder
 
-data = read_csv('fxpfinal.csv', encoding='cp1255')
+data = read_csv('C:\\Projects\\NLP\\online_soldiers\\fxpfinal.csv', encoding='cp1255')
+print("data loaded")
 data = data['post'].str.replace('\n', ' ').str.replace('\r', ' ').squeeze()
+print("removed whitespaces")
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-cased')
+print("loaded tokenizer")
+print("tokenization started")
 tokenized_text = tokenizer.tokenize(data)
+print("tokenization ended")
