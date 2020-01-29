@@ -9,7 +9,7 @@ from pandas import DataFrame, read_csv
 import torch
 from transformers import BertTokenizer, BertModel
 
-data = read_csv('C:\\Projects\\NLP\\online_soldiers\\fxpfinal.csv', encoding='cp1255')
+data = read_csv('fxpfinal.csv', encoding='cp1255')
 print("data loaded")
 data = data['post'].str.replace('\n', ' ').str.replace('\r', ' ').squeeze()
 print("removed whitespaces")
