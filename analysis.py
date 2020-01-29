@@ -7,7 +7,7 @@ Created on Sun Jan 26 10:19:10 2020
 
 from pandas import DataFrame, read_csv
 import torch
-from transformers import BertTokenizer, BertModel, BertEncoder
+from transformers import BertTokenizer, BertModel
 
 data = read_csv('C:\\Projects\\NLP\\online_soldiers\\fxpfinal.csv', encoding='cp1255')
 print("data loaded")
