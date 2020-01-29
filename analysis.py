@@ -11,7 +11,7 @@ from transformers import BertTokenizer, BertModel
 
 data = read_csv('fxpfinal.csv', encoding='cp1255')
 print("data loaded")
-data = data['post'].str.replace('\n', ' ').str.replace('\r', ' ').squeeze()
+data = data['post'].str.replace('\n', ' ').str.replace('\r', ' ').values.tolist()
 print("removed whitespaces")
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-cased')
