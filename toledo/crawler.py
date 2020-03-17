@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import requests
 from urllib.request import urlopen, Request
 from lxml import html
 import pandas as pd
@@ -11,21 +14,19 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 \
 def thread_ids(pages, verbose=True):
     print('Fetching pages...')
     count = 0
+    base_main_url = 'https://www.fxp.co.il/forumdisplay.php?f=46&pages=%d'
     thread_ids = []
-    for i in pages:
-        request = Request(url='https://www.fxp.co.il/forumdisplay.php?f=46&page=%s' % i,
-                          headers=headers)
-        tree = html.fromstring(urlopen(request).read().decode('utf-8'))
-
-        # slice [7:] to eliminate prefix
-        thread_ids += [int(x[7:]) for x
-                       in tree.xpath('//ol[@id=\'threads\']/li/@id')]
-
+    for i in range(1, pages):
+        main_url = base_main_url % i
+        response = requests.get(main_url)
+        contents = response.content.decode("utf-8")
+        response.close()
+        currenct_thread_ids = re.findall("showthread\.php\?t=(.*)\" id=", contents)
+        thread_ids +=  [int(x) for x in currenct_thread_ids]
         count += 1
         if verbose and (count % 10 == 0):
             print('Fetched %s pages' % (count))
             print(datetime.now().time())
-    print(pd.Series(thread_ids).value_counts().head(20))
     return thread_ids
 
 
@@ -73,4 +74,4 @@ def thread_content(thread_ids, file, verbose=True):
     df.to_csv(file, encoding='utf-8')
 
 
-thread_content(thread_ids(range(1, 240)), '1to240.csv')
+thread_content(thread_ids(5), '1to240.csv')
