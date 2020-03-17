@@ -39,6 +39,9 @@ def thread_content(thread_ids, file, verbose=True):
             (i),
             headers=headers)
         tree = html.fromstring(urlopen(request).read().decode('utf-8'))
+        title = tree.xpath('//div[@class=\'titleshowt greengr\']/h1/text()')
+        df.append({'thread': i, 'post': title[0]},
+                  ignore_index=True)
         messages = tree.xpath('//div[@id=\'postlist\']//blockquote\
             [@class=\'postcontent restore\']')
         for m in messages:
@@ -67,6 +70,7 @@ def thread_content(thread_ids, file, verbose=True):
             print(datetime.now().time())
         if (count % 1000 == 0):
             df.to_csv(file, encoding='utf-8')
+    df.to_csv(file, encoding='utf-8')
 
 
 thread_content(thread_ids(range(1, 240)), '1to240.csv')
