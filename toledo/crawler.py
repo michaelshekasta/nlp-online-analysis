@@ -14,7 +14,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 \
 def thread_ids(pages, verbose=True):
     print('Fetching pages...')
     count = 0
-    base_main_url = 'https://www.fxp.co.il/forumdisplay.php?f=46&pages=%d'
+    base_main_url = 'https://www.fxp.co.il/forumdisplay.php?f=46&page=%d'
     thread_ids = []
     for i in range(1, pages):
         main_url = base_main_url % i
